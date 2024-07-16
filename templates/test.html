@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+      <!-- Section: Intro -->
+      <section class="">
+
+        <style>
+          #intro-upper {
+            height: 500px;
+            background-color: hsl(0, 0%, 94%);
+          }
+
+          @media (max-width: 767.98px) {
+            #intro-upper {
+              height: 500px;
+            }
+          }
+
+          #intro-lower {
+            margin-top: -240px;
+          }
+
+          @media (max-width: 767.98px) {
+            #intro-lower {
+              margin-top: -270px;
+            }
+          }
+        </style>
+
+        <div id="intro-upper" class="pb-5">
+
+          <div class="container pt-4">
+
+            <h1 class="display-4 pt-5 fw-bold ls-tight text-primary">Spread The Jam</h1>
+            <p class="text-dark pb-5">
+                Your source for the latest Jam Band news, tour schedules and tickets...
+            </p>
+
+          </div>
+        </div>
+
+        <div id="intro-lower">
+
+          <div class="container">
+                    <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">Register Now For Free <i
+                            class="fas fa-angle-right ms-1"></i></button>
+          </div>
+
+        </div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Register for Free</h5>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <iframe loading="lazy" src="https://jambands.com/news/2023/03/15/amy-helm-and-grahame-lesh-launch-new-project-celebrating-music-of-the-band-and-grateful-dead-plan-inaugural-run/" name="iFrame Name" scrolling="Yes" height="800px" width="100%" style="border: none;"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+      </section>
+      <!-- Section: Intro -->
+{% endblock %}

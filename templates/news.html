@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+<section class="features-3 py-4 mb-10">
+    <div class="container">
+      <div class="row text-center justify-content-center">
+        <div class="col-lg-6">
+          <h2>Spread the news...</h2>
+        </div>
+      </div>
+      <div class="row gx-lg-5 mt-5">
+      {% for article in object_list %}
+      <!-- Column -->
+          <div class="col-lg-4 col-md-12 mb-7">
+          <div class="card rounded-6 h-100">
+              <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <a class="d-block blur-shadow-image">
+                  <img src="{{ article.main_image }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg">
+                </a>
+                <div class="colored-shadow" style="background-image: url(&quot;https://demos.creative-tim.com/test/material-dashboard-pro/assets/img/products/product-1-min.jpg&quot;);"></div>
+              </div>
+              <div class="card-body">
+                  <h5 class="card-title">{{ article.headline }}</h5>
+                  <p class="card-text">
+                      {{ article.date_published }}
+                  </p>
+                  <p class="text-muted">
+                      {{ article.description }}
+                  </p>
+                  <a href="{{ article.url }}" target="_blank" >
+                      <button type="button" class="btn btn-primary" >View Full Article
+                          <i class="fas fa-angle-right ms-1"></i>
+                      </button>
+                  </a>
+              </div>
+          </div>
+          </div>
+      <!--    Column -->
+      {% endfor %}
+      </div>
+    </div>
+    <div>
+      <span>
+          {% if page_obj.has_previous %}
+              <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+          {% endif %}
+            <span>
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+          </span>
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            {% endif %}
+      </span>
+    </div>
+</section>
+</div>
+{% endblock %}

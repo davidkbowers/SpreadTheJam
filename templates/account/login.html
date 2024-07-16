@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <section class="">
+        <div class="container">
+            <div class="row mt-lg-n12 mt-md-n12 mt-n11 justify-content-center">
+                <div class="col-xl-5">
+                    <div class="card mt-8">
+                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                            <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 text-center py-4">
+                                <h4 class="font-weight-bolder text-white mt-1">Sign In</h4>
+                            </div>
+                        </div>
+                        <div class="card-body pb-3">
+                            <p>If you have not created an account yet, then please
+                                <a href="{% url 'account_signup' %}">sign up</a> first.</p>
+                            <form class="login" method="POST" action="{% url 'account_login' %}">
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                {% if redirect_field_value %}
+                                    <input type="hidden" name="{{ redirect_field_name }}"
+                                           value="{{ redirect_field_value }}"/>
+                                {% endif %}
+                                <button class="btn btn-primary mt-1" type="submit">Sign in</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+                  
