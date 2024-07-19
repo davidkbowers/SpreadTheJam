@@ -40,7 +40,27 @@
     .signup-img {
       background-image: url("{% static 'img/illustrations/illustration-signin.jpg' %}");
       background-size: cover;
-    }        
+    }
+    #id_email {
+      border: 2px solid #d63384;
+      border-radius: 5px;
+      padding-left: 10px
+    }
+    #id_password1 {
+      border: 2px solid #d63384;
+      border-radius: 5px;
+      padding-left: 10px
+    }
+    #id_login {
+      border: 2px solid #d63384;
+      border-radius: 5px;
+      padding-left: 10px
+    }
+    #id_password {
+      border: 2px solid #d63384;
+      border-radius: 5px;
+      padding-left: 10px
+    }
   </style>
 </head>
 
@@ -51,10 +71,10 @@
         <div class="col-12">
           <nav class="navbar navbar-expand-lg  blur border-radius-xl top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
             <div class="container-fluid px-0">
-              <a class="navbar-brand font-weight-bolder ms-sm-3  d-none d-md-block" href="{% url 'home' %}" rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom" target="_blank">
+             <a class="navbar-brand font-weight-bolder ms-sm-3  d-none d-md-block" href="{% url 'home' %}" rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom" target="_blank">
                 Spread The Jam
               </a>
-              <a href="{% url 'account_signup' %}" class="btn btn-sm  bg-gradient-primary  mb-0 ms-auto d-lg-none d-block">Sign Up</a>
+<!--              <a href="{% url 'account_signup' %}" class="btn btn-sm  bg-gradient-primary  mb-0 ms-auto d-lg-none d-block">Sign Up</a>-->
               <button class="navbar-toggler shadow-none ms-md-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon mt-2">
                   <span class="navbar-toggler-bar bar1"></span>
@@ -88,15 +108,14 @@
                       Contact Us
                     </a>
                   </li>
-                </ul>
-                <ul class="navbar-nav d-lg-block d-none mx-2">
                   <li class="nav-item">
-                    <a href="{% url 'account_signup' %}" class="btn btn-sm  bg-gradient-primary  mb-0">Sign Up</a>
+                    <a href="{% url 'account_signup' %}" class="btn btn-sm  bg-gradient-primary me-1 mb-0">Sign Up</a>
                   </li>
-                </ul>
-                <ul class="navbar-nav d-lg-block d-none">
                   <li class="nav-item">
-                    <a href="{% url 'account_login' %}" class="btn btn-sm  bg-gradient-primary  mb-0">Sign In</a>
+                    <a href="{% url 'account_login' %}" class="btn btn-sm  bg-gradient-primary  me-1 mb-0">Sign In</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{% url 'account_logout' %}" class="btn btn-sm  bg-gradient-primary  mb-0">Sign Out</a>
                   </li>
                 </ul>
               </div>
