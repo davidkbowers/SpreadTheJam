@@ -32,7 +32,8 @@ env = environ.Env()
 SECRET_KEY = "django-insecure-y8jl(ij35ywvt!jtrx=f0^%*=cct)yh6*mi%p3h%1hylx1=^l2" #APP_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DJANGO_DEBUG", True)
+#DEBUG = env.bool("DJANGO_DEBUG", True)
+DEBUG = True
 if DEBUG:
     # If Debug is True, allow all.
     ALLOWED_HOSTS = ['*']
@@ -162,6 +163,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+ROOT_URLCONF = 'jam.urls'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
