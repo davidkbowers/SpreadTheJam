@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'crispy_forms',
     'crispy_bootstrap5',
-    'captcha',
     'jam_site.apps.JamSiteConfig',
     'django.contrib.sites', # allauth
     'allauth', # allauth
