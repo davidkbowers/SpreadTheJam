@@ -13,7 +13,6 @@ from django.template.loader import render_to_string
 from allauth.account.signals import user_signed_up
 from django.dispatch import receiver
 from .forms import ContactForm, NewsletterForm
-from .misc_funcs import ensure_divisible_by_4, convert_to_multidimensional
 from .models import Article, Band, Show, Contact, Newsletter
 
 
@@ -133,7 +132,7 @@ def newsletter(request):
 
             messages.success(request, 'Newsletter signup submitted successfully.')
             form1 = NewsletterForm()
-            return render(request, 'newsletter.html', {'form': form1})
+            return render(request, 'newsletter_success.html', {'form': form1})
     else:
         form = NewsletterForm()
         return render(request, 'newsletter.html', {'form': form})

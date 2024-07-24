@@ -29,7 +29,7 @@
           }
         </style>
         <div id="intro-upper" class="pb-5">
-          <div class="container pt-4">
+          <div class="container pt-4 mt-5">
             <h1 class="display-4 pt-5 fw-bold ls-tight text-body">Spread The Jam</h1>
             <p class="text-dark pb-5">
                 Your source for the latest Jam Band news, tour schedules and tickets...
@@ -40,7 +40,7 @@
           <div class="container">
             <div class="row g-0 align-items-center">
               <div class="col-xl-7 mb-4 mb-xl-0">
-                <img src="{% static 'img/home.webp' %}" class="w-90 border-radius-lg" alt="home image" />
+                <img src="{% static 'img/home.webp' %}" class="w-90 border-radius-lg" style="margin-top: -100px;" alt="home image" />
               </div>
               <div class="col-xl-5" >
                 <div class="card rounded-6 shadow-5">
@@ -48,13 +48,13 @@
                     <h4 class="mb-4">
                       Sign up for the bands you like.
                     </h4>
-                    <p class="text-muted mb-4">Sign up to cut through the music scene noise and see just the articles and shows of the bands you are interested in.</p>
-                    <p class="text-muted mb-4">Sign up to get a free weekly newsletter of Jamband news and shows.</p>
+                    <p class="text-muted mb-4">Sign up, select the bands you care about, and get only their news in your inbox so you can stay up to date and eliminate the noise!</p>
                     <a href="{% url 'account_signup' %}">
-                        <button type="button" class="btn btn-primary">Sign up Now For Free
+                        <button type="button" class="btn btn-primary z-n1" disabled>Sign up Now For Free
                             <i class="fas fa-angle-right ms-1"></i>
                         </button>
                     </a>
+                      <img src="{% static 'img/coming_soon.png' %}" class="w-90 border-radius-lg z-10" style="margin-top: -250px;" alt="coming soon image" />
                   </div>
                 </div>
               </div>
