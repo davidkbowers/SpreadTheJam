@@ -28,7 +28,8 @@
     <!--  <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>-->
     <style type="text/css">
         .header-img {
-            background-image: url("{% static 'img/hero3.png' %}");
+            /*background-image: url("{% static 'img/hero3.png' %}");*/
+            background-image: url('/static/img/hero3.png');
             background-size: cover;
         }
 
@@ -135,7 +136,7 @@
 <!-- End Navbar -->
 
 <header>
-    <div class="page-header min-vh-50 header-img mb-3" loading="lazy">
+    <div class="page-header min-vh-50 header-img mb-3" loading="lazy" >
         <span class="mask bg-gradient-dark opacity-5"></span>
         <div class="container">
             <div class="row">
