@@ -81,3 +81,15 @@ class Newsletter(models.Model):
 
     class Meta:
         db_table = 'newsletter'
+
+
+class Userbands(models.Model):
+    id = models.AutoField(primary_key=True)
+    user_id = models.IntegerField()
+    band_id = models.IntegerField()
+    band_name = models.CharField(max_length=1024, blank=True, default='')
+    band_selected = models.BooleanField()
+
+    class Meta:
+        db_table = 'userbands'
+        ordering = ['user_id', 'band_id']
