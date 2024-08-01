@@ -15,30 +15,29 @@ import environ
 import os
 import dj_database_url
 
-PGHOST = os.getenv("PGHOST")
-PGDATABASE = os.getenv("PGDATABASE")
-PGUSER = os.getenv("PGUSER")
-PGPASSWORD = os.getenv("PGPASSWORD")
-APP_SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-y8jl(ij35ywvt!jtrx=f0^%*=cct)yh6*mi%p3h%1hylx1=^l2" #APP_SECRET_KEY
+SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DJANGO_DEBUG", True)
+print(DEBUG)
 if DEBUG:
     # If Debug is True, allow all.
     ALLOWED_HOSTS = ['*']
 else:
-    ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['jam.applikuapp.com', 'spreadthejam.band', 'smtp.fastmail.com'])
-#SECRET_KEY = env('DJANGO_SECRET_KEY')
+    ALLOWED_HOSTS = env('DJANGO_ALLOWED_HOSTS')
 
 # Application definition
 
@@ -103,11 +102,23 @@ WSGI_APPLICATION = 'jam.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-DATABASES = {'default': dj_database_url.config(default='postgresql://mdwfjfejftwwpboo:mtguheyqcegcobvy@5.161.119.174:8001/fvkirqleqkgvjqav')}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+# if DEBUG:
+#     DATABASE_URL_DEBUG = os.getenv("DATABASE_URL_DEBUG")
+#     DATABASES = {'default': dj_database_url.config(default=DATABASE_URL_DEBUG)}
+# else:
+#     DATABASE_URL = os.getenv("DATABASE_URL")
+#     DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)
+
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
