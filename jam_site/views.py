@@ -3,7 +3,6 @@ import string
 from datetime import date
 from dateutil.relativedelta import relativedelta
 from django.contrib import messages
-from django.contrib.auth.models import User
 from django.shortcuts import render
 from django.views.generic import ListView
 import smtplib, ssl

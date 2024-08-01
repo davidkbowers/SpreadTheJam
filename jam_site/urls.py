@@ -23,6 +23,7 @@ from .views import SearchListView
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('home/', views.home, name='home'),
     path('articles/', ArticlesListView.as_view(), name='articles'),
     path('shows/', ShowsListView.as_view(), name='shows'),
     path('about/', views.about, name='about'),

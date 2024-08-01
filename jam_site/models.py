@@ -1,5 +1,8 @@
 from django.db import models
-
+from django.db.models.signals import pre_save
+from django.contrib.auth.models import User
+from django.dispatch import receiver
+from allauth.account.signals import user_signed_up
 
 class ArticleList(models.Model):
     url = models.CharField(max_length=1024, blank=True, default='')
@@ -93,3 +96,23 @@ class Userbands(models.Model):
     class Meta:
         db_table = 'userbands'
         ordering = ['user_id', 'band_id']
+
+
+@receiver(user_signed_up)
+def update_userbands_on_signup(sender=User, **kwargs):
+    print('user_signed_up signal received')
+    user = kwargs['user']
+    bands = Band.objects.all()
+    for band in bands:
+        userband = Userbands(user_id=user.id,
+                             band_id=band.id,
+                            band_name=band.name,
+                            band_selected=True)
+        userband.save()
+    print('userbands updated')
+
+@receiver(pre_save, sender=User)
+def update_username_from_email(sender, instance, **kwargs):
+    user_email = instance.email
+    username = user_email
+    instance.username = username
