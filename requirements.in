@@ -1,0 +1,11 @@
+# requirements.in
+Django==4.2.3
+dj-database-url==2.1.0
+django-crispy-forms==2.1
+crispy-bootstrap5==2024.2
+django-allauth==0.58.2
+psycopg2-binary==2.9.9
+whitenoise==6.2.0
+python-dateutil==2.8.2
+django-environ==0.11.2
+django-cors-headers==4.3.0

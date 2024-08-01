@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Section: Intro -->
+<section class="">
+    <div class="container">
+        <div class="row mt-lg-n12 mt-md-n12 mt-n11 justify-content-center">
+            <h4 class="font-weight-bolder text-white mt-1">Select the bands you want to see.</h4>
+            <form class="" method="post" action="">
+                {% csrf_token %}
+                <div class="col-lg-4 col-md-12 mb-7">
+                    <div class="card rounded-6 h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">viewing bands</h5>
+                            <ul class="list-group">
+                                {% for sel in selbands %}
+                                <li class="list-group-item active" aria-current="true" value="{{sel.id}}">{{sel.band_name}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 mb-7">
+                    <div class="card rounded-6 h-100">
+                        <div class="card-body">
+                            <ul class="list-group">
+                                {% for unsel in unselbands %}
+                                <li class="list-group-item active" aria-current="true" value="{{unsel.id}}">{{unsel.band_name}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
