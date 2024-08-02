@@ -102,18 +102,18 @@ WSGI_APPLICATION = 'jam.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-# if DEBUG:
-#     DATABASE_URL_DEBUG = os.getenv("DATABASE_URL_DEBUG")
-#     DATABASES = {'default': dj_database_url.config(default=DATABASE_URL_DEBUG)}
-# else:
-#     DATABASE_URL = os.getenv("DATABASE_URL")
-#     DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+if DEBUG:
+    DATABASE_URL_DEBUG = os.getenv("DATABASE_URL_DEBUG")
+    DATABASES = {'default': dj_database_url.config(default=DATABASE_URL_DEBUG)}
+else:
+    DATABASE_URL = os.getenv("DATABASE_URL")
+    DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)
 
