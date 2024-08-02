@@ -32,13 +32,12 @@ SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DJANGO_DEBUG", True)
-
+print(DEBUG)
 if DEBUG:
     # If Debug is True, allow all.
     ALLOWED_HOSTS = ['*']
 else:
-    allowedhosts = env.str('DJANGO_ALLOWED_HOSTS')
-    ALLOWED_HOSTS = env(allowedhosts)
+    ALLOWED_HOSTS = [env.str('DJANGO_ALLOWED_HOSTS')]
 
 # Application definition
 
