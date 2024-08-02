@@ -37,7 +37,7 @@ if DEBUG:
     # If Debug is True, allow all.
     ALLOWED_HOSTS = ['*']
 else:
-    ALLOWED_HOSTS = [env.str('DJANGO_ALLOWED_HOSTS')]
+    ALLOWED_HOSTS = env.str('DJANGO_ALLOWED_HOSTS')
 
 # Application definition
 
