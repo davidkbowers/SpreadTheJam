@@ -37,7 +37,8 @@ if DEBUG:
     # If Debug is True, allow all.
     ALLOWED_HOSTS = ['*']
 else:
-    ALLOWED_HOSTS = env.str('DJANGO_ALLOWED_HOSTS')
+    ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS',
+                             default=['jam.applikuapp.com', 'spreadthejam.band', 'smtp.fastmail.com'])
 
 # Application definition
 
