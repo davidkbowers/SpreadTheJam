@@ -27,6 +27,7 @@ urlpatterns = [
     path('articles/', ArticlesListView.as_view(), name='articles'),
     path('shows/', ShowsListView.as_view(), name='shows'),
     path('about/', views.about, name='about'),
+    path('bands/', views.bands, name='bands'),
     path('contact/', views.contact, name='contact'),
     path('newsletter/', views.newsletter, name='newsletter'),
     path('search/', SearchListView.as_view(), name='search'),

@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 from allauth.account.signals import user_signed_up
 from django.dispatch import receiver
 from .forms import ContactForm, NewsletterForm
-from .models import Article, Band, Show, Contact, Newsletter
+from .models import Article, Band, Show, Contact, Newsletter, Userbands
 
 
 @receiver(user_signed_up)
@@ -69,6 +69,17 @@ class BandsListView(ListView):
     model = Band
     context_object_name = 'bands'
     template_name = 'bands.html'
+
+
+def bands(request):
+    user = request.user
+    if user.is_authenticated:
+        sel_bands = Userbands.objects.filter(user_id=user.id, band_selected=True)
+        unsel_bands = Userbands.objects.filter(user_id=user.id, band_selected=False)
+        return render(request, 'bands2.html', {'sel_bands': sel_bands, 'unsel_bands': unsel_bands})
+    else:
+        return render(request, 'signup.html')
+
 
 
 class ArticlesListView(ListView):
