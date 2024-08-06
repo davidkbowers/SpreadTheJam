@@ -22,7 +22,7 @@
             background: white;
         }
 
-        [role="listbox"]#ss_elem_list {
+        [role="listbox"]#ms_elem_list {
             position: relative;
             max-height: 18em;
             overflow-y: auto;
@@ -163,18 +163,18 @@
     </style>
     <section>
         <div class="container">
+            <div class="row">&emsp14;<br>&emsp14;<br>&emsp14;<br>&emsp14;</div>
             <div class="row mt-lg-n12 mt-md-n12 mt-n11 justify-content-center">
-                <div class="col-xl-5">
-                    <div class="card mt-8">
+                <div class="col-xl-8">
+                    <div class="card mt-5">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 text-center py-4">
-                                <h4 class="font-weight-bolder text-white mt-1">Requests, Suggestions, Questions?</h4>
-                                <p class="mb-1 text-white text-sm">Write your name, email, and message below</p>
+                                <h4 class="font-weight-bolder text-white mt-1">Spread The Jam, your way!?</h4>
+                                <p class="mb-1 text-white text-sm">Move the bands you aren't interested in to the right.</p>
                             </div>
                         </div>
                         <div class="card-body pb-3"><form role="form">
-
-                                <p>Move the bands you aren't interested in to the right.</p>
+                                <p></p>
                                 <div class="listbox-area">
                                     <div class="left-area">
                                         <span id="ms_av_l" class="listbox-label">Bands you want:</span>
@@ -191,7 +191,7 @@
                                                 aria-keyshortcuts="Alt+ArrowRight Enter"
                                                 aria-disabled="true">
                                             <span class="checkmark" aria-hidden="true"></span>
-                                            Unselect
+                                            Select
                                         </button>
                                     </div>
                                     <div class="right-area">
@@ -210,7 +210,7 @@
                                                 aria-keyshortcuts="Alt+ArrowLeft Delete"
                                                 aria-disabled="true">
                                             <span class="checkmark" aria-hidden="true"></span>
-                                            Select
+                                            Unselect
                                         </button>
                                     </div>
                                     <div class="offscreen">Last change: <span aria-live="polite"
@@ -238,7 +238,7 @@
          * The aria namespace is used to support sharing class definitions between example files
          * without causing eslint errors for undefined classes
          */
-        var aria = aria || {};
+        {#var aria = aria || {};#}
 
         /**
          * @class
@@ -248,25 +248,25 @@
          *  The DOM node pointing to the toolbar
          */
 
-        aria.Toolbar = class Toolbar {
+{% comment %}        aria.Toolbar = class Toolbar {
             constructor(toolbarNode) {
                 this.toolbarNode = toolbarNode;
                 this.items = this.toolbarNode.querySelectorAll('.toolbar-item');
                 this.selectedItem = this.toolbarNode.querySelector('.selected');
                 this.registerEvents();
-            }
+            }{% endcomment %}
 
             /**
              * @description
              *  Register events for the toolbar interactions
              */
-            registerEvents() {
+{% comment %}            registerEvents() {
                 this.toolbarNode.addEventListener(
                     'keydown',
                     this.checkFocusChange.bind(this)
                 );
                 this.toolbarNode.addEventListener('click', this.checkClickItem.bind(this));
-            }
+            }{% endcomment %}
 
             /**
              * @description
@@ -278,6 +278,7 @@
              * @param evt
              *  The keydown event object
              */
+{% comment %}
             checkFocusChange(evt) {
                 let nextIndex, nextItem;
 
@@ -313,6 +314,7 @@
                     }
                 }
             }
+{% endcomment %}
 
             /**
              * @description
@@ -320,11 +322,13 @@
              * @param evt
              *  The click event object
              */
+{% comment %}
             checkClickItem(evt) {
                 if (evt.target.classList.contains('toolbar-item')) {
                     this.selectItem(evt.target);
                 }
             }
+{% endcomment %}
 
             /**
              * @description
@@ -332,11 +336,11 @@
              * @param element
              *  The item to deselect
              */
-            deselectItem(element) {
+{% comment %}            deselectItem(element) {
                 element.classList.remove('selected');
                 element.setAttribute('aria-selected', 'false');
                 element.setAttribute('tabindex', '-1');
-            }
+            }{% endcomment %}
 
             /**
              * @description
@@ -344,13 +348,13 @@
              * @param element
              *  The item to select
              */
-            selectItem(element) {
+{% comment %}            selectItem(element) {
                 this.deselectItem(this.selectedItem);
                 element.classList.add('selected');
                 element.setAttribute('aria-selected', 'true');
                 element.setAttribute('tabindex', '0');
                 this.selectedItem = element;
-            }
+            }{% endcomment %}
 
             /**
              * @description
@@ -358,10 +362,10 @@
              * @param element
              *  The item to focus on
              */
-            focusItem(element) {
+{% comment %}            focusItem(element) {
                 element.focus();
             }
-        };
+        };{% endcomment %}
         /*
          *   This content is licensed according to the W3C Software License at
          *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
@@ -1076,12 +1080,12 @@
         window.addEventListener('load', function () {
             // This onload handle initializes two examples. Only initialize example if the example
             // can be found in the dom.
-            if (document.getElementById('ss_imp_list')) {
+            if (document.getElementById('ms_elem_list')) {
                 var ex1ImportantListbox = new aria.Listbox(
-                    document.getElementById('ss_imp_list')
+                    document.getElementById('ms_elem_list')
                 );
                 var ex1UnimportantListbox = new aria.Listbox(
-                    document.getElementById('ss_unimp_list')
+                    document.getElementById('ms_unimp_list')
                 );
                 new aria.Toolbar(document.querySelector('[role="toolbar"]'));
 
@@ -1117,7 +1121,7 @@
                     }
 
                     if (updateText) {
-                        var ex1LiveRegion = document.getElementById('ss_live_region');
+                        var ex1LiveRegion = document.getElementById('ms_live_region');
                         ex1LiveRegion.innerText = updateText;
                     }
                 });

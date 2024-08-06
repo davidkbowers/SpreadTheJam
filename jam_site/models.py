@@ -116,3 +116,4 @@ def update_username_from_email(sender, instance, **kwargs):
     user_email = instance.email
     username = user_email
     instance.username = username
+    print("update_username_from_email")
