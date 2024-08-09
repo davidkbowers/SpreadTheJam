@@ -17,14 +17,22 @@
 [role="listbox"] {
   margin: 1em 0 0;
   padding: 0;
-  min-height: 18em;
+  height: 30em;
+  min-height: 20em;
   border: 1px solid #aaa;
   background: white;
 }
 
 [role="listbox"]#ss_elem_list {
   position: relative;
+  height: 20em;
   max-height: 18em;
+  overflow-y: auto;
+}
+
+[role="listbox"]#ms_elem_list {
+  position: relative;
+  max-height: 100%;
   overflow-y: auto;
 }
 
@@ -208,6 +216,47 @@ button[aria-disabled="true"] {
         <span class="checkmark" aria-hidden="true"></span>
         Turbo vertical take-off capability
       </li>
+            <li id="ms_opt1" role="option" aria-selected="false">
+        <span class="checkmark" aria-hidden="true"></span>
+        Leather seats
+      </li>
+      <li id="ms_opt2" role="option" aria-selected="false">
+        <span class="checkmark" aria-hidden="true"></span>
+        Front seat warmers
+      </li>
+      <li id="ms_opt3" role="option" aria-selected="false">
+        <span class="checkmark" aria-hidden="true"></span>
+        Rear bucket seats
+      </li>
+      <li id="ms_opt4" role="option" aria-selected="false">
+        <span class="checkmark" aria-hidden="true"></span>
+        Rear seat warmers
+      </li>
+      <li id="ms_opt5" role="option" aria-selected="false">
+        <span class="checkmark" aria-hidden="true"></span>
+        Front sun roof
+      </li>
+      <li id="ms_opt6" role="option" aria-selected="false">
+        <span class="checkmark" aria-hidden="true"></span>
+        Rear sun roof
+      </li>
+      <li id="ms_opt7" role="option" aria-selected="false">
+        <span class="checkmark" aria-hidden="true"></span>
+        Cloaking capability
+      </li>
+      <li id="ms_opt8" role="option" aria-selected="false">
+        <span class="checkmark" aria-hidden="true"></span>
+        Food synthesizer
+      </li>
+      <li id="ms_opt9" role="option" aria-selected="false">
+        <span class="checkmark" aria-hidden="true"></span>
+        Advanced waste recycling system
+      </li>
+      <li id="ms_opt10" role="option" aria-selected="false">
+        <span class="checkmark" aria-hidden="true"></span>
+        Turbo vertical take-off capability
+      </li>
+
     </ul>
     <button type="button" id="ex2-add" class="move-right-btn" aria-keyshortcuts="Alt+ArrowRight Enter" aria-disabled="true">
       <span class="checkmark" aria-hidden="true"></span>

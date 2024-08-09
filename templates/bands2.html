@@ -17,7 +17,8 @@
         [role="listbox"] {
             margin: 1em 0 0;
             padding: 0;
-            min-height: 18em;
+            height: 30em;
+            min-height: 20em;
             border: 1px solid #aaa;
             background: white;
         }
@@ -26,6 +27,12 @@
             position: relative;
             max-height: 18em;
             overflow-y: auto;
+        }
+
+        [role="listbox"]#ms_elem_list {
+          position: relative;
+          max-height: 100%;
+          overflow-y: auto;
         }
 
         [role="listbox"] + *,
@@ -161,24 +168,24 @@
             white-space: nowrap;
         }
     </style>
-    <section>
+     <section>
         <div class="container">
             <div class="row mt-lg-n12 mt-md-n12 mt-n11 justify-content-center">
-                <div class="col-xl-5">
-                    <div class="card mt-8">
-                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                            <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 text-center py-4">
-                                <h4 class="font-weight-bolder text-white mt-1">Requests, Suggestions, Questions?</h4>
-                                <p class="mb-1 text-white text-sm">Write your name, email, and message below</p>
+                <div class="col-xl-10">
+                    <form role="form">
+                        <div class="card mt-8">
+                            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                                <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1 text-center py-4">
+                                    <h4 class="font-weight-bolder text-white mt-1">Eliminate the noise</h4>
+                                    <p class="mb-1 text-white text-sm">with only News and Shows you care about</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-body pb-3"><form role="form">
-
+                            <div class="card-body pb-3">
                                 <p>Move the bands you aren't interested in to the right.</p>
                                 <div class="listbox-area">
                                     <div class="left-area">
                                         <span id="ms_av_l" class="listbox-label">Bands you want:</span>
-                                        <ul id="ms_elem_list" tabindex="0" role="listbox" aria-labelledby="ms_av_l"
+                                        <ul id="ms_elem_list" size="20" tabindex="0" role="listbox" aria-labelledby="ms_av_l"
                                             aria-multiselectable="true">
                                             {% for sel in sel_bands %}
                                                 <li id="ms_opt1" role="option" aria-selected="false">
@@ -213,12 +220,17 @@
                                             Select
                                         </button>
                                     </div>
-                                    <div class="offscreen">Last change: <span aria-live="polite"
-                                                                              id="ms_live_region"></span></div>
                                 </div>
-                            </form>
+                            </div>
+                            <div class="card-footer text-center pt-0 px-sm-4 px-1">
+                                <div class="text-center">
+                                    <button type="button" class="btn bg-gradient-primary w-100 mt-4 mb-0">Save Changes</button>
+                                </div>
+                                <div class="offscreen">Last change: <span aria-live="polite"
+                                                                              id="ms_live_region"></span></div>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

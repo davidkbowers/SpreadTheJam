@@ -76,7 +76,7 @@ def bands(request):
     if user.is_authenticated:
         sel_bands = Userbands.objects.filter(user_id=user.id, band_selected=True)
         unsel_bands = Userbands.objects.filter(user_id=user.id, band_selected=False)
-        return render(request, 'bands3.html', {'sel_bands': sel_bands, 'unsel_bands': unsel_bands})
+        return render(request, 'bands2.html', {'sel_bands': sel_bands, 'unsel_bands': unsel_bands})
     else:
         return render(request, 'signup.html')
 
