@@ -74,9 +74,19 @@ class BandsListView(ListView):
 def bands(request):
     user = request.user
     if user.is_authenticated:
-        sel_bands = Userbands.objects.filter(user_id=user.id, band_selected=True)
-        unsel_bands = Userbands.objects.filter(user_id=user.id, band_selected=False)
-        return render(request, 'bands2.html', {'sel_bands': sel_bands, 'unsel_bands': unsel_bands})
+        if request.method == 'POST':
+            band_id = request.POST.get('band_id')
+            band = Band.objects.get(id=band_id)
+            userband = Userbands.objects.get(user_id=user.id, band_id=band_id)
+            if userband.band_selected:
+                userband.band_selected = False
+            else:
+                userband.band_selected = True
+            userband.save()
+        else:
+            sel_bands = Userbands.objects.filter(user_id=user.id, band_selected=True)
+            unsel_bands = Userbands.objects.filter(user_id=user.id, band_selected=False)
+            return render(request, 'bands.html', {'sel_bands': sel_bands, 'unsel_bands': unsel_bands})
     else:
         return render(request, 'signup.html')
 
