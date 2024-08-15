@@ -82,6 +82,17 @@
                     </button>
                     <div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0" id="navigation">
                         <ul class="navbar-nav navbar-nav-hover ms-auto">
+                            {% if request.user.is_authenticated %}
+                            <li class="nav-item mx-2">
+                                <a role="button" href="{% url 'bands' %}"
+                                   class="nav-link ps-2 d-flex cursor-pointer align-items-center" id="dropdownMenuPages"
+                                   aria-expanded="false">
+                                    <i class="material-icons opacity-6 me-2 text-md">library_music</i>
+                                    My Bands
+                                </a>
+                            </li>
+                                
+                            {% endif %}
                             <li class="nav-item mx-2">
                                 <a role="button" href="{% url 'articles' %}"
                                    class="nav-link ps-2 d-flex cursor-pointer align-items-center" id="dropdownMenuPages"
