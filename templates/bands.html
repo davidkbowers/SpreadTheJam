@@ -3,47 +3,111 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <script src="https://cdn.jsdelivr.net/npm/dual-listbox/dist/dual-listbox.min.js"></script>   
-    <script href="{% static 'css/duallistbox.js' %}" rel="stylesheet"></script>  
-    <link href="https://cdn.jsdelivr.net/npm/dual-listbox/dist/dual-listbox.css" rel="stylesheet" />    
-    <link href="{% static 'css/duallistbox.css' %}" rel="stylesheet"/>
-    <select id="select1" name="select1" class="select1" multiple>
-        {% for sel in sel_bands %}
-            <option value="{{ sel.band_id }}">{{ sel.band_name }}</option>
-        {% endfor %}
-    </select>
-
-
-                                            {% for unsel in unsel_bands %}
-                                                    {{ unsel.band_name }}
-                                            {% endfor %}
-
-
-    <script type="text/javascript">
-      let dualListbox = new DualListbox("#select1"); // Selects the first element with the id 'select'
-
-      function btnsub() {
-        console.log("duh");
-        var x = document.getElementById("dual-listbox__selected");
-        var txt = "";
-        var txt1 = "";
-        var txt2 = "";
-        var i;
-        for (i = 0; i < x.length; i++) {
-          txt = txt + x.options[i].text + ",";
-          txt1 = txt1 + x.options[i].value + ",";
-          txt2 = txt2 + "{value:" + x.options[i].value + " text:" + x.options[i].text +"}";
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .equal-height {
+            display: flex;
+            flex-direction: column;
         }
-        console.log({txt});
-        console.log({txt1});
-        console.log({txt2});
+        .equal-height .form-select {
+            flex: 1;
+        }
+        .bg-purple {
+            background-color:#5A359F;
+            color:white;
+        }
+    </style>
+    <div class="container mt-5">
+        <h1 class="mb-4">Your Bands - Cut The Noise</h1>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-5 mb-3 equal-height">
+                <h2 class="mb-4">Bands You Want</h2>
+                <select multiple class="form-select" size="10" id="listbox1">
+                    {% for sel in sel_bands %}
+                    <option value="{{ sel.band_id }}">{{ sel.band_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12 col-md-auto mb-3 d-flex flex-column align-items-center justify-content-center">
+                <h2 class="mb-4">&nbsp;</h2>
+                <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                    <button class="btn bg-purple mb-2 w-100" id="addSelected"><i class="fa-solid fa-angle-right"></i></button>
+                    <button class="btn bg-gradient-secondary mb-2 w-100" id="removeSelected"><i class="fa-solid fa-angle-left"></i></button>
+                    <button class="btn bg-purple mb-2 w-100" id="addAll"><i class="fa-solid fa-angles-right"></i></button>
+                    <button class="btn bg-gradient-secondary mb-2 w-100" id="removeAll"><i class="fa-solid fa-angles-left"></i></button>
+                </div>
+            </div>
+            <div class="col-12 col-md-5 mb-3 equal-height">
+                <h2 class="mb-4">Bands You Don't</h2>
+                <select multiple class="form-select" size="10" id="listbox2">
+                    {% for unsel in unsel_bands %}
+                    <option value="{{ unsel.band_id }}">{{ unsel.band_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12 text-center">
+                <button class="btn btn-success w-auto bg-gradient-primary" id="saveChanges">Save Changes</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#addSelected').click(function() {
+                $('#listbox1 option:selected').each(function() {
+                    $('#listbox2').append($(this).clone());
+                    $(this).remove();
+                });
+            });
 
-        var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-        xmlhttp.open("POST", "https://jsonplaceholder.typicode.com/posts");
-        xmlhttp.setRequestHeader("Content-Type", "application/json");
-        xmlhttp.send(JSON.stringify(txt2));
+            $('#removeSelected').click(function() {
+                $('#listbox2 option:selected').each(function() {
+                    $('#listbox1').append($(this).clone());
+                    $(this).remove();
+                });
+            });
 
-    }
+            $('#addAll').click(function() {
+                $('#listbox1 option').each(function() {
+                    $('#listbox2').append($(this).clone());
+                    $(this).remove();
+                });
+            });
 
+            $('#removeAll').click(function() {
+                $('#listbox2 option').each(function() {
+                    $('#listbox1').append($(this).clone());
+                    $(this).remove();
+                });
+            });
+
+            $('#saveChanges').click(function() {
+                var listItems = [];
+
+                $('#listbox2 option').each(function() {
+                    listItems.push({
+                        value: $(this).val(),
+                        text: $(this).text()
+                    });
+                });
+
+                $.ajax({
+                    url: 'https://spreadthejam.band/bands',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(listItems),
+                    success: function(response) {
+                        alert('Changes saved successfully!');
+                    },
+                    error: function(xhr, status, error) {
+                        alert('An error occurred while saving changes: ' + error);
+                    }
+                });
+            });
+        });
     </script>
 {% endblock %}
