@@ -11,6 +11,7 @@ from email.mime.multipart import MIMEMultipart
 from django.template.loader import render_to_string
 from allauth.account.signals import user_signed_up
 from django.dispatch import receiver
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import ContactForm, NewsletterForm
 from .models import Article, Band, Show, Contact, Newsletter, Userbands
 
@@ -98,6 +99,7 @@ class ArticlesListView(ListView):
     template_name = 'news.html'
 
     def get_queryset(self):
+        # TODO: Add a filter for the bands the user has selected
         today = date.today()
         back_year = today - relativedelta(years=5)
         return Article.objects.filter(date_published__gte=back_year, date_published__lte=today).order_by('-date_published')
@@ -109,6 +111,7 @@ class ShowsListView(ListView):
     template_name = 'shows.html'
 
     def get_queryset(self):
+        # TODO: Add a filter for the bands the user has selected
         today = date.today()
         next_year = today + relativedelta(years=1)
         return Show.objects.filter(event_date__gte=today, event_date__lte=next_year).order_by('event_date')
@@ -185,3 +188,37 @@ def send_email(email, text_mail, html_mail):
         server.sendmail(
             sender_email, email, message.as_string()
         )
+
+
+def articles(request):
+    my_articles = []
+    today = date.today()
+    back_year = today - relativedelta(years=5)
+    page = request.GET.get('page', 1)
+
+    if request.user.is_authenticated:
+        user_id = request.user.id
+        sel_bands = Userbands.objects.filter(user_id=user_id, band_selected=True)
+        for band in sel_bands:
+            articles = Article.objects.filter(date_published__gte = back_year, date_published__lte = today).order_by('-date_published')
+            for article in articles:
+                is_contained = band.band_name in article.description
+                if is_contained:
+                    my_articles.append(article)
+    else:
+        my_articles = Article.objects.filter(date_published__gte=back_year, date_published__lte=today).order_by('-date_published')
+
+    paginator = Paginator(my_articles, 12)
+    try:
+        article_list = paginator.page(page)
+    except PageNotAnInteger:
+        article_list = paginator.page(1)
+    except EmptyPage:
+        article_list = paginator.page(paginator.num_pages)
+
+
+    context = {
+        'article_list': article_list,
+    }
+
+    return render(request, 'news.html', {'article_list': article_list})
