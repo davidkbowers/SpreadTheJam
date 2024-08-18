@@ -10,25 +10,25 @@
         </div>
       </div>
       <div class="row gx-lg-5 mt-5">
-      {% for article in article_list %}
+      {% for obj in page_obj %}
       <!-- Column -->
           <div class="col-lg-4 col-md-12 mb-7">
           <div class="card rounded-6 h-100">
               <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <a class="d-block blur-shadow-image">
-                  <img src="{{ article.main_image }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg">
+                  <img src="{{ obj.main_image }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg">
                 </a>
                 <div class="colored-shadow" style="background-image: url('https://demos.creative-tim.com/test/material-dashboard-pro/assets/img/products/product-1-min.jpg');"></div>
               </div>
               <div class="card-body">
-                  <h5 class="card-title">{{ article.headline }}</h5>
+                  <h5 class="card-title">{{ obj.headline }}</h5>
                   <p class="card-text">
-                      {{ article.date_published }}
+                      {{ obj.date_published }}
                   </p>
                   <p class="text-muted">
-                      {{ article.description }}
+                      {{ obj.description }}
                   </p>
-                  <a href="{{ article.url }}" target="_blank" >
+                  <a href="{{ obj.url }}" target="_blank" >
                       <button type="button" class="btn btn-primary" >View Full Article
                           <i class="fas fa-angle-right ms-1"></i>
                       </button>
@@ -40,19 +40,25 @@
       {% endfor %}
       </div>
     </div>
-    <div>
-      <span>
-          {% if page_obj.has_previous %}
-              <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
-          {% endif %}
-            <span>
+<!-- Pagination controls -->
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
             Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-          </span>
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">Next</a>
-            {% endif %}
-      </span>
-    </div>
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
 </section>
 </div>
 {% endblock %}

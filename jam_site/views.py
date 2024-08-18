@@ -180,43 +180,24 @@ def send_email(email, text_mail, html_mail):
 
 
 def articles(request):
-    page = request.GET.get('page', 1)
-    my_articles = []
     today = date.today()
     back_year = today - relativedelta(years=5)
-
-
     my_articles = Article.objects.filter(date_published__gte=back_year, date_published__lte=today).order_by('-date_published')
-    paginator = Paginator(my_articles, 12)
-    try:
-        article_list = paginator.page(page)
-    except PageNotAnInteger:
-        article_list = paginator.page(1)
-    except EmptyPage:
-        article_list = paginator.page(paginator.num_pages)
 
-    context = {
-        'article_list': article_list,
-    }
-    return render(request, 'news.html', context)
+    paginator = Paginator(my_articles, 12)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'news.html', {'page_obj': page_obj})
 
 
 def shows(request):
-    page = request.GET.get('page', 1)
-
     today = date.today()
     next_year = today + relativedelta(years=1)
     my_shows = Show.objects.filter(event_date__gte=today, event_date__lte=next_year).order_by('event_date')
 
     paginator = Paginator(my_shows, 12)
-    try:
-        shows_list = paginator.page(page)
-    except PageNotAnInteger:
-        shows_list = paginator.page(1)
-    except EmptyPage:
-        shows_list = paginator.page(paginator.num_pages)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
-    context = {
-        'shows_list': shows_list,
-    }
-    return render(request, 'shows.html', context)
+    return render(request, 'shows.html', {'page_obj': page_obj})
