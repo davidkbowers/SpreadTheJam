@@ -9,11 +9,7 @@
             </div>
           </div>
           <div class="row gx-lg-5 mt-5">
-                {% for show in object_list %}
-
-
-
-
+                {% for show in shows_list %}
                       <!-- Column -->
           <div class="col-lg-4 col-md-12 mb-7">
             <div class="card rounded-6 h-100">
@@ -21,7 +17,7 @@
                   <a class="d-block blur-shadow-image">
                     <img src="{{ show.image_url }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-lg">
                   </a>
-                  <div class="colored-shadow" style="background-image: url(&quot;https://demos.creative-tim.com/test/material-dashboard-pro/assets/img/products/product-1-min.jpg&quot;);"></div>
+                  <div class="colored-shadow" style="background-image: url('https://demos.creative-tim.com/test/material-dashboard-pro/assets/img/products/product-1-min.jpg');"></div>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ show.name }}</h5>

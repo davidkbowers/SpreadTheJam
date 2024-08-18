@@ -26,7 +26,21 @@ def send_subscribe_email(**kwargs):
 
 
 def home(request):
-    return render(request, 'index.html')
+    my_articles = []
+    today = date.today()
+
+    back_year = today - relativedelta(years=5)
+    my_articles = Article.objects.filter(date_published__gte=back_year, date_published__lte=today).order_by(
+            '-date_published')
+
+    next_year = today + relativedelta(years=1)
+    my_shows = Show.objects.filter(event_date__gte=today, event_date__lte=next_year).order_by('event_date')
+
+    context = {
+        'article_list': my_articles[0:3],
+    }
+
+    return render(request, 'index.html', context)
 
 
 def contact(request):
@@ -90,31 +104,6 @@ def bands(request):
             return render(request, 'bands.html', {'sel_bands': sel_bands, 'unsel_bands': unsel_bands})
     else:
         return render(request, 'signup.html')
-
-
-
-class ArticlesListView(ListView):
-    context_object_name = 'articles'
-    paginate_by = 12
-    template_name = 'news.html'
-
-    def get_queryset(self):
-        # TODO: Add a filter for the bands the user has selected
-        today = date.today()
-        back_year = today - relativedelta(years=5)
-        return Article.objects.filter(date_published__gte=back_year, date_published__lte=today).order_by('-date_published')
-
-class ShowsListView(ListView):
-    #model = Show
-    context_object_name = 'shows'
-    paginate_by = 12
-    template_name = 'shows.html'
-
-    def get_queryset(self):
-        # TODO: Add a filter for the bands the user has selected
-        today = date.today()
-        next_year = today + relativedelta(years=1)
-        return Show.objects.filter(event_date__gte=today, event_date__lte=next_year).order_by('event_date')
 
 
 class SearchListView(ListView):
@@ -191,23 +180,13 @@ def send_email(email, text_mail, html_mail):
 
 
 def articles(request):
+    page = request.GET.get('page', 1)
     my_articles = []
     today = date.today()
     back_year = today - relativedelta(years=5)
-    page = request.GET.get('page', 1)
 
-    if request.user.is_authenticated:
-        user_id = request.user.id
-        sel_bands = Userbands.objects.filter(user_id=user_id, band_selected=True)
-        for band in sel_bands:
-            articles = Article.objects.filter(date_published__gte = back_year, date_published__lte = today).order_by('-date_published')
-            for article in articles:
-                is_contained = band.band_name in article.description
-                if is_contained:
-                    my_articles.append(article)
-    else:
-        my_articles = Article.objects.filter(date_published__gte=back_year, date_published__lte=today).order_by('-date_published')
 
+    my_articles = Article.objects.filter(date_published__gte=back_year, date_published__lte=today).order_by('-date_published')
     paginator = Paginator(my_articles, 12)
     try:
         article_list = paginator.page(page)
@@ -216,9 +195,28 @@ def articles(request):
     except EmptyPage:
         article_list = paginator.page(paginator.num_pages)
 
-
     context = {
         'article_list': article_list,
     }
+    return render(request, 'news.html', context)
 
-    return render(request, 'news.html', {'article_list': article_list})
+
+def shows(request):
+    page = request.GET.get('page', 1)
+
+    today = date.today()
+    next_year = today + relativedelta(years=1)
+    my_shows = Show.objects.filter(event_date__gte=today, event_date__lte=next_year).order_by('event_date')
+
+    paginator = Paginator(my_shows, 12)
+    try:
+        shows_list = paginator.page(page)
+    except PageNotAnInteger:
+        shows_list = paginator.page(1)
+    except EmptyPage:
+        shows_list = paginator.page(paginator.num_pages)
+
+    context = {
+        'shows_list': shows_list,
+    }
+    return render(request, 'shows.html', context)

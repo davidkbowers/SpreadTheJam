@@ -82,17 +82,6 @@
                     </button>
                     <div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0" id="navigation">
                         <ul class="navbar-nav navbar-nav-hover ms-auto">
-                            {% if request.user.is_authenticated %}
-                            <li class="nav-item mx-2">
-                                <a role="button" href="{% url 'bands' %}"
-                                   class="nav-link ps-2 d-flex cursor-pointer align-items-center" id="dropdownMenuPages"
-                                   aria-expanded="false">
-                                    <i class="material-icons opacity-6 me-2 text-md">library_music</i>
-                                    My Bands
-                                </a>
-                            </li>
-                                
-                            {% endif %}
                             <li class="nav-item mx-2">
                                 <a role="button" href="{% url 'articles' %}"
                                    class="nav-link ps-2 d-flex cursor-pointer align-items-center" id="dropdownMenuPages"
@@ -156,11 +145,21 @@
                     <p class="lead pe-md-5 me-md-5 text-white opacity-8">because we love the music!</p>
                     <div class="buttons">
                         <a href="{% url 'newsletter' %}">
-                            <button type="button" class="btn bg-gradient-primary mt-4">Get Your Free Weekly Newsletter
+                            <button type="button" class="btn bg-gradient-primary mt-4">Sign Up For Your Free Weekly Newsletter
                             </button>
                         </a>
                     </div>
                 </div>
+                <div class="col-lg-6 col-md-7 d-flex justify-content-right text-md-start text-center flex-column mt-sm-0 mt-7 ms-n4">
+                <div class="card rounded-6 shadow-5">
+                  <div class="card-body">
+                    <h4 class="mb-4">
+                      Support the work I do bringing you jam band news and shows.
+                    </h4>
+                    <a href="https://www.buymeacoffee.com/spreadthejam"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=spreadthejam&button_colour=BD5FFF&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" /></a>
+                  </div>
+                </div>                
+                </div>                
             </div>
         </div>
     </div>

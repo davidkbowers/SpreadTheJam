@@ -1,65 +1,75 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-      <!-- Section: Intro -->
-      <section class="">
+    <!-- Section: Intro -->
+    <section class="">
 
         <style>
-          #intro-upper {
-              margin-top: -72px;
-              height: 500px;
-              background-color: hsl(0, 0%, 94%);
-          }
-
-          @media (max-width: 767.98px) {
             #intro-upper {
-              margin-top: -72px;
-              height: 500px;
+                margin-top: -72px;
+                height: 500px;
+                background-color: hsl(0, 0%, 94%);
             }
-          }
 
-          #intro-lower {
-            margin-top: -300px;
-          }
+            @media (max-width: 767.98px) {
+                #intro-upper {
+                    margin-top: -72px;
+                    height: 500px;
+                }
+            }
 
-          @media (max-width: 767.98px) {
             #intro-lower {
-            margin-top: -300px;
+                margin-top: -300px;
             }
-          }
+
+            @media (max-width: 767.98px) {
+                #intro-lower {
+                    margin-top: -300px;
+                }
+            }
         </style>
-        <div id="intro-upper" class="pb-5">
-          <div class="container pt-4 mt-5">
-            <h1 class="display-4 pt-5 fw-bold ls-tight text-body">Spread The Jam</h1>
-            <p class="text-dark pb-5">
-                Your source for the latest Jam Band news, tour schedules and tickets...
-            </p>
-          </div>
-        </div>
-        <div id="intro-lower">
-          <div class="container">
-            <div class="row g-0 align-items-center">
-              <div class="col-xl-7 mb-4 mb-xl-0">
-                <img src="{% static 'img/home.webp' %}" class="w-90 border-radius-lg mt-1" style="margin-top: -100px;" alt="home image" />
-              </div>
-              <div class="col-xl-5" >
-                <div class="card rounded-6 shadow-5">
-                  <div class="card-body px-4 p-4 p-md-5 p-lg-4 p-xl-5">
-                    <h4 class="mb-4">
-                      Sign up for the bands you like.
-                    </h4>
-                    <p class="text-muted mb-4">Sign up, select the bands you care about, and get only their news in your inbox so you can stay up to date and eliminate the noise!</p>
-                    <a href="{% url 'account_signup' %}">
-                        <button type="button" class="btn btn-primary z-n1">Sign up Now For Free
-                            <i class="fas fa-angle-right ms-1"></i>
-                        </button>
-                    </a>
-                  </div>
+
+        <div class="container">
+            <div class="row text-center justify-content-center">
+                <div class="col-lg-6">
+                    <h2>Spread the news...</h2>
                 </div>
-              </div>
             </div>
-          </div>
+            <div class="row gx-lg-5 mt-5">
+                {% for article in article_list %}
+                    <!-- Column -->
+                    <div class="col-lg-4 col-md-12">
+                        <div class="card rounded-6 h-100">
+                            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                                <a class="d-block blur-shadow-image">
+                                    <img src="{{ article.main_image }}" alt="img-blur-shadow"
+                                         class="img-fluid shadow border-radius-lg">
+                                </a>
+                                <div class="colored-shadow"
+                                     style="background-image: url('https://demos.creative-tim.com/test/material-dashboard-pro/assets/img/products/product-1-min.jpg');"></div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ article.headline }}</h5>
+                                <p class="card-text">
+                                    {{ article.date_published }}
+                                </p>
+                                <p class="text-muted">
+                                    {{ article.description }}
+                                </p>
+                                <a href="{{ article.url }}" target="_blank">
+                                    <button type="button" class="btn btn-primary">View Full Article
+                                        <i class="fas fa-angle-right ms-1"></i>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--    Column -->
+                {% endfor %}
+            </div>
+            <div class="row gx-lg-5 mt-5">
+                <a role="button" href="{% url 'articles' %}"><h3>See the rest...</h3></a>                
+            </div>
         </div>
-      </section>
-      <!-- Section: Intro -->
+    </section>
 {% endblock %}
