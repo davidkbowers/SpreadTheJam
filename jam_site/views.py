@@ -1,6 +1,6 @@
 import secrets
 import string
-from datetime import date
+from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 from django.contrib import messages
 from django.shortcuts import render
@@ -201,3 +201,71 @@ def shows(request):
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'shows.html', {'page_obj': page_obj})
+
+
+def convert_1d_to_2d(l, cols):
+    return [l[i:i + cols] for i in range(0, len(l), cols)]
+
+
+def email_newsletter(request):
+    date_today = datetime.datetime.now()
+    # Return the day of the week as an integer, where Monday is 0 and Sunday is 6. The same as
+    dow = date_today.weekday()
+    news_start_date = date_today
+    shows_start_date = date_today
+    news_end_date = date_today
+    if dow == 6:  # Sunday
+        news_start_date -= datetime.timedelta(days=7)
+    elif dow == 0:  # monday
+        news_start_date -= datetime.timedelta(days=8)
+        shows_start_date -= datetime.timedelta(days=1)
+    elif dow == 1:  # tuesday
+        news_start_date -= datetime.timedelta(days=9)
+        shows_start_date -= datetime.timedelta(days=2)
+    elif dow == 2:  # wednesday
+        news_start_date -= datetime.timedelta(days=10)
+        shows_start_date -= datetime.timedelta(days=3)
+    elif dow == 3:  # thursday
+        news_start_date -= datetime.timedelta(days=11)
+        shows_start_date -= datetime.timedelta(days=4)
+    elif dow == 4:  # friday
+        news_start_date -= datetime.timedelta(days=12)
+        shows_start_date -= datetime.timedelta(days=5)
+    elif dow == 5:  # Saturday
+        news_start_date -= datetime.timedelta(days=13)
+        shows_start_date -= datetime.timedelta(days=6)
+
+    news_end_date = news_start_date
+    news_end_date += datetime.timedelta(days=6)
+    shows_end_date = shows_start_date
+    shows_end_date += datetime.timedelta(days=6)
+
+    news_start = news_start_date.strftime("%Y-%m-%d")
+    news_end = news_end_date.strftime("%Y-%m-%d")
+    shows_start = shows_start_date.strftime("%Y-%m-%d")
+    shows_end = shows_end_date.strftime("%Y-%m-%d")
+
+    my_articles = Article.objects.filter(date_published__gte=news_start,
+                                         date_published__lte=news_end).order_by('-date_published')
+    article_pairs = convert_1d_to_2d(my_articles, 2)
+
+    my_shows = Show.objects.filter(date_published__gte=shows_start,
+                                   date_published__lt=shows_end).order_by('-event_date')
+    show_pairs = convert_1d_to_2d(my_shows, 2)
+
+    context = {
+        'article_list': article_pairs,
+        'show_list': show_pairs,
+        'news_start': news_start,
+        'news_end': news_end,
+        'shows_start': shows_start,
+        'shows_end': shows_end,
+    }
+    #html_content = render_to_string('email/newsletter.html', context)
+    return render(request, 'email/newsletter.html', context)
+
+
+
+
+
+
